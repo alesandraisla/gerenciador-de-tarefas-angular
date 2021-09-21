@@ -8,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListarTarefaComponent implements OnInit {
 
-  tarefas: Tarefa[] = [];
+  // tarefas: Tarefa[] = [];
+  tarefas!:Tarefa[];
 
-  constructor(private TarefaService: TarefaService) { }
+    constructor(private tarefaService: TarefaService) { }
 
   //é chamado pelo angular, logo após a criação do construtor
   ngOnInit() {
@@ -25,9 +26,18 @@ export class ListarTarefaComponent implements OnInit {
   }
 
   listarTodos(): Tarefa[] {
-    return this.TarefaService.listarTodos();
+    return this.tarefaService.listarTodos();
+  }
+
+  remover($event: any, tarefa: Tarefa): void {
+    $event.preventDefault();
+    const confirmed = confirm('Deseja remover a tarefa "' + tarefa.nome + '"?');
+    if (tarefa.id && confirmed) {
+      this.tarefaService.remover(tarefa.id);
+      this.tarefas = this.listarTodos();
+    }
   }
 
 
-
 }
+
