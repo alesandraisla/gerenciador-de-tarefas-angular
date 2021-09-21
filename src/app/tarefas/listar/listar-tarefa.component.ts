@@ -38,6 +38,15 @@ export class ListarTarefaComponent implements OnInit {
     }
   }
 
+  alterarStatus($event: any, tarefa: Tarefa): void {
+    $event.preventDefault();
+    const confirmed = confirm('Deseja alterar o status da tarefa "' + tarefa.nome + '"?');
+    if (tarefa.id && confirmed) {
+      this.tarefaService.alterarStatus(tarefa.id);
+      this.tarefas = this.listarTodos();
+    }
+  }
+
 
 }
 
